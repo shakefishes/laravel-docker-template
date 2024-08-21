@@ -5,6 +5,7 @@
 ### Todoモデルのallメソッドで実行しているSQLは何か
 →SELECT * FROM todos
 　※todosテーブルの全てのカラムを取得します。
+　※SQLの確認については、SQL実行前に \DB::enableQueryLog(); でクエリログを有効化して、SQL実行後に dd(\DB::getQueryLog()); を利用し、確認しました。
 
 ### Todoモデルのallメソッドの返り値は何か
 →Todoモデルの全レコードを取得し、Collectionクラスをインスタンス化しています。
@@ -16,7 +17,7 @@
 
 ### view関数の第1・第2引数の指定と何をしているか
 →①第1引数
-　　フォルダ名.ファイル名
+　　src\resources\viewsディレクトリ内にある該当のディレクトリ名.ファイル名
 　②第2引数
 　　表示させたい配列のblade内での変数名 => 代入したい値
 　　例)TodoController
@@ -51,16 +52,15 @@
 ### saveメソッドで実行しているSQLは何か
 →INSERT INTO todos (`content`, `updated_at`, `created_at`) VALUES (?, ?, ?)
 　※todosテーブルにレコードを追加する。（項目content,updated_at,created_atにそれぞれ値を代入）
+　※SQLの確認については、SQL実行前に \DB::enableQueryLog(); でクエリログを有効化して、SQL実行後に dd(\DB::getQueryLog()); を利用し、確認しました。
 
 ### redirect()->route()は何をしているか
 →redirect関数はリダイレクトHTTPレスポンスを返します。
-　※引数無しで呼び出した場合は、リダイレクタインスタンスを返します。
-　※リダイレクトHTTPレスポンス
-　　→リダイレクトのレスポンスはIlluminate\Http\RedirectResponseクラスのインスタンスです。
-　　　ユーザーを他のURLへリダイレクトさせるために必要なしっかりとしたヘッダを含んでいます。
-　route関数は、指定した名前付きルートのURLを生成します。ルートがパラメーターを受け入れる場合は、それらを関数の２番目の引数として渡すことができます。
-　※デフォルトでは、route関数は絶対URLを生成します。
-　※相対URLを生成する場合は、関数の３番目の引数としてfalseを渡しています。
+　今回はredirect関数に引数を渡していないことからリダイレクタインスタンスを返されており、そのインスタンスが持つroute関数の引数が'todo.index'であるため、'/todo'に接続するように返されています。
+　※route関数は、指定した名前付きルートのURLを生成します。
+　　ルートがパラメーターを受け入れる場合は、それらを関数の２番目の引数として渡すことができます。
+　　デフォルトでは、route関数は絶対URLを生成します。
+　　相対URLを生成する場合は、関数の３番目の引数としてfalseを渡しています。
 
 ## その他
 
@@ -71,7 +71,7 @@
 
 ### マイグレーションファイルのup()、down()は何のコマンドを実行した時に呼び出されるのか
 →up()：appコンテナ内でphp artisan migrateを実行した時。
-　down()：appコンテナ内でphp artis\an migrate:rollback：rollbackを実行した時。
+　down()：appコンテナ内でphp artisan migrate:rollbackを実行した時。
 
 ### Seederクラスの役割は何か
 →Laravelのデータベース初期化機能の一部であり、データベースに初期データを追加するためのクラスです。
